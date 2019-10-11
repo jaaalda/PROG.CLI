@@ -21,16 +21,26 @@ while(equipo1 != "fin" || equipo2 != "fin"){
     equipo2=prompt("Dime equipo 2: ")
     goles2=prompt("Goles equipo 2: ")
 
+    let liga=new Map()
+
+        liga.set(equipo1, [goles1])
+        liga.set(equipo2, [goles2])
 
 
-    if (equipo1 == "fin" || equipo2 == "fin"  ){
-        break
-    }
+    
+if (equipo1 == "fin" || equipo2 == "fin"  ){
+        
+    console.log(liga);
+    
+}
 
 
 
 
 }
+
+//NO SE HACERLO, LO SIENTO.
+
 
 
 
