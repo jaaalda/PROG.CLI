@@ -5,6 +5,14 @@
 
 let array = [3, 5, 7, 1, 1]
 
+function factorial (n) {
+	let total = 1; 
+	for (i=1; i<=n; i++) {
+		total = total * i; 
+	}
+	return total; 
+}
+
 function multipleVerga(yarray){
     if (yarray.length == 0){
         return "El kkk va a por ti"
@@ -12,27 +20,14 @@ function multipleVerga(yarray){
 
 
     else{
+        let filtrado= yarray.map(factorial)
 
-        
-
-        let filtrado= yarray.filter()
+        return filtrado
           
-            
-        
-            
-        
-             
-   
     }
 }
 
 console.log(multipleVerga(array));
 
 
-// function factorial (n) {
-// 	var total = 1; 
-// 	for (i=1; i<=n; i++) {
-// 		total = total * i; 
-// 	}
-// 	return total; 
-// }
+

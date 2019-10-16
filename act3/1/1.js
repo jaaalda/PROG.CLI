@@ -1,7 +1,7 @@
 
 
 
-let array=[4, 6, 8, 9, 1]
+let array=[2, 2, 2, 2, 1]
 
 
 function media(a){

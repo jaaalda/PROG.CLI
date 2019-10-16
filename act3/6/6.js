@@ -8,8 +8,18 @@
 let blackMamba=["pepe","jackson","bigmama"]
 let whiteChick=["penelope","jackson","alexisTexas"]
 
-function usersArray(malo, bueno){
 
+// function tiene(a, b){
+// for (let i = 0; i < array.length; i++) {
+    
+//     if (a.includes(b[i])==true){
+
+//     }
+// }
+
+
+function usersArray(malo, bueno){
+        let filtrado = []
         if (malo.length == 0){
             console.log(bueno);
             
@@ -17,6 +27,18 @@ function usersArray(malo, bueno){
 
 
         else{
+                filtrado=malo.filter(x=>{
+                    for (let i = 0; i < bueno.length; i++) {
+        
+                        if (malo.includes(bueno[i])==true){
+                            
+                        }
+
+                    }
+                })
 
         }
 }
+
+
+console.log(usersArray(blackManba, whiteChick));
