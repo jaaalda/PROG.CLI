@@ -63,11 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let grid = document.getElementById("canvas_grid")
   let cajas = document.getElementsByClassName("canvas_cell")
 
-
-
-
-
-
   grid.addEventListener('click', event => {
 
     // pincel
