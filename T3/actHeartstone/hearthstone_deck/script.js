@@ -108,11 +108,14 @@ function updateAverage(){
  * @param {object} cardJSON objeto que contiene la información de la carta cuya descripción (campo flavor) debe crearse 
  */
 function createCardInformation(cardJSON) {
-    //Tu código a partir de aquí
 
+    let description = cardJSON.flavor
+    let cardinfo = document.createElement('div');
+    cardinfo.textContent = cardJSON.flavor
+    cardinfo.className = 'cardinfo'
 
+        return cardinfo
 
-    
 }
 
 /**
@@ -120,7 +123,19 @@ function createCardInformation(cardJSON) {
  * @param {object} cardJSON objeto que contiene la información de la carta a presentar en la galería 
  */
 function createCardHTML(cardJSON) {
-   //Tu código a partir de aquí
+
+    let cardHTML = document.createElement('div')
+    cardHTML.className = 'card_container'
+
+    let imagen = document.createElement('img')
+    imagen.className = 'card_image'
+    imagen.id = cardJSON.id
+    imagen.src = cardBaseURL + cardJSON.id + '.png'
+    cardHTML.appendChild(imagen)
+    cardHTML.appendChild(createCardInformation(cardJSON))
+
+        return cardHTML
+
 }
 
 /**
@@ -128,7 +143,19 @@ function createCardHTML(cardJSON) {
  * número de columnas en la galería, y al número de filas.
  */
 function createCanvasContent() {
-    //Tu código a partir de aquí
+    
+    document.getElementById('card_canvas').innerHTML = ''
+    let lola = currentPage * 6
+    console.log(lola, lola + 6, cardData.length);
+    
+    for (let i = lola; i < Math.min(lola + 6, cardData.length); i++){
+
+        let nuevaCarta = cardData[i];
+        let eso = createCardHTML(nuevaCarta)
+        let card_canvas = document.getElementById('card_canvas')
+        card_canvas.appendChild(eso)
+
+    }
 }
 
 /**
@@ -136,24 +163,65 @@ function createCanvasContent() {
  * los datos de las cartas desde la API pública.
  */
 function initializeInterface() {
-    //Aquí pondremos el código para dibujar la interfaz gráfica de usuario
 
-    //Actualiza el paginador
-    
+    updatePager();
+    createCanvasContent();
 
-    //Dibuja la galería de cartas
-    
+    document.getElementById("card_canvas").addEventListener("click", (event) => {
 
-    //Asocia al elemento card_canvas un evento de click para gestionar el click sobre las cartas
-    //de la galería (añadir carta a la baraja)
-    
-    //Asocia al elemento card_table un evento de click sobre la preview de las cartas (quitar de la baraja)
-    
-    //Asocia un evento de click sobre la flecha izquierda. Si puede, debe ir a la página anterior
-    
-    //Asocia un evento de click sobre la flecha derecha. Si puede, debe ir a la página posterior
-    
-}
+        let tabla = document.getElementById("card_table")
+
+        let carta = getCardInformation(event.target.id)
+
+        let cartadiv = document.createElement('div')
+
+        cartadiv.className = "card_tile"
+        cartadiv.textContent = carta.name
+        cartadiv.style.backgroundImage = "url('" + tilesBaseURL + carta.id + ".png')"
+        tabla.appendChild(cartadiv)
+        currentDeck.push(carta)
+        updateTotalCards();
+        updateAverage();
+})
+
+
+    document.getElementById("card_table").addEventListener("click", (event) => {
+
+
+    if (event.target.className == "card_tile") {
+        event.target.remove()
+
+        for (let i = 0; i < currentDeck.length; i++) {
+            if (currentDeck[i].name == event.target.textContent) {
+                currentDeck.splice(i, 1)
+                break
+            }
+        }
+
+        updateTotalCards();
+
+            if (currentDeck.length == 0){
+            document.getElementById('avg_count').textContent = 'Average cost 0';
+        }
+            else{
+            updateAverage();
+        }
+    }
+})
+
+let leftarrow = document.getElementById('left_arrow').firstElementChild;
+
+leftarrow.addEventListener("click", (event) =>{
+
+    if (currentPage > 0) {
+        currentPage--;
+        createCanvasContent();
+        updatePager();
+    }
+})
+
+
+
 
 /**
  * NO TOCAR esta función. Está asociada al evento de llegada de datos desde la API.
@@ -163,7 +231,7 @@ function getData(data) {
     cardData = data;
     currentPage = 0;
     initializeInterface(cardData);
-    for (let elem of document.getElementsByClassName("card_information")) {
+    for (let elem of document.getElementsByClassName("cardinfo")) {
         window.fitText(elem);
     }
 }
